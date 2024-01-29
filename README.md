@@ -1,4 +1,6 @@
 # Morphological Classification of Galaxies
 #### Work in Progress.
 
+#### In this Repo, i will be uploading a data science project completed last year, that aims to create classifiers for Galaxy Classification, using classical machine learning models like decision trees, and neural networks for the images, unsupervised learning will also be covered, and at last, composite systems of classifiers that mixes tabular data with images will be implemented
+
 ![Sample Image (5 channels)](/assets/img/galaxias.jpeg)
