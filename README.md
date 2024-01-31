@@ -10,7 +10,7 @@ The dataset used in this project is sourced from the Sloan Digital Sky Survey (S
 
 ## Current State
 
-As of the latest update, the repository now includes three notebooks. The initial notebook offers a comprehensive exploration of the dataset, encompassing data curation and visualization. Additionally, there is an unsupervised learning analysis focused on the dataset's tabular aspects, excluding image-related components.
+As of the latest update, the repository now includes three jupyter notebooks. The initial notebook offers a comprehensive exploration of the dataset, encompassing data curation and visualization. Additionally, there is an unsupervised learning analysis focused on the dataset's tabular aspects, excluding image-related components.
 
 Also, a new addition to the repository is the supervised learning notebook. This notebook features the implementation of a neural network using Keras, along with various strategies employing random forests. It provides insights into different supervised learning techniques applied to the morphological classification of galaxies.
 
