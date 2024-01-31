@@ -10,7 +10,7 @@ The dataset used in this project is sourced from the Sloan Digital Sky Survey (S
 
 ## Current State
 
-As of now, the repository contains two notebooks. This notebook serves as a comprehensive exploration of the dataset, encompassing data curation and visualization. Additionally, there is an unsupervised learning analysis focused on the dataset's tabular aspects, excluding the image-related components.
+As of now, the repository contains two notebooks. The first one serves as a comprehensive exploration of the dataset, encompassing data curation and visualization. Additionally, there is an unsupervised learning analysis focused on the dataset's tabular aspects, excluding the image-related components.
 
 Please note that this project is a work in progress, and updates will be provided as new developments unfold. Your feedback and contributions are highly welcome. Thank you for your interest in the Morphological Classification of Galaxies project!
 
