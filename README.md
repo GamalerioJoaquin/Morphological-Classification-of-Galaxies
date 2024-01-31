@@ -1,11 +1,23 @@
 # Morphological Classification of Galaxies
+
 #### Work in Progress.
 
-#### In this Repo, i am going to be uploading a data science project that i finished last year. This aims to create classifiers for Galaxy Classification, using classical machine learning models like decision trees, and neural networks for the images, unsupervised learning will also be covered, and at last, composite systems of classifiers that mixes tabular data with images will be implemented
-#### The data comes from https://www.sdss4.org/surveys/ . The Sloan Digital Sky Survey or SDSS is a major multi-spectral imaging and spectroscopic redshift survey using a dedicated 2.5-m wide-angle optical telescope at Apache Point Observatory in New Mexico, United States. 
+Welcome to the Morphological Classification of Galaxies project repository. In this repository, I am sharing a data science project that I completed last year. The primary objective of this project is to develop classifiers for galaxy classification. The methodology involves utilizing classical machine learning models such as decision trees and neural networks for image analysis. Additionally, the project explores unsupervised learning techniques and concludes with the implementation of composite systems that integrate tabular data with images.
 
-#### In the current State, the repo contains one notebook in which I explore and curte the data, along with data visualization.
-#### It also contains an unsupervised learning exploration of the dataset datapoints, excluding the images.
+## Data Source
+
+The dataset used in this project is sourced from the Sloan Digital Sky Survey (SDSS). The SDSS is a significant multi-spectral imaging and spectroscopic redshift survey conducted using a dedicated 2.5-m wide-angle optical telescope located at the Apache Point Observatory in New Mexico, United States.
+
+## Current State
+
+As of now, the repository contains a two notebooks. This notebook serves as a comprehensive exploration of the dataset, encompassing data curation and visualization. Additionally, there is an unsupervised learning analysis focused on the dataset's tabular aspects, excluding the image-related components.
+
+Please note that this project is a work in progress, and updates will be provided as new developments unfold. Your feedback and contributions are highly welcome. Thank you for your interest in the Morphological Classification of Galaxies project!
+
+
+
+
+
 
 
 ![Sample Image (5 channels)](/assets/img/galaxias.jpeg)
