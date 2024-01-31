@@ -2,7 +2,7 @@
 
 #### Work in Progress.
 
-Welcome to the Morphological Classification of Galaxies project repository. In this repository, I am sharing a data science project that I completed last year. The primary objective of this project is to develop classifiers for galaxy classification. The methodology involves utilizing classical machine learning models such as decision trees and neural networks for image analysis. Additionally, the project explores unsupervised learning techniques and concludes with the implementation of composite systems that integrate tabular data with images.
+Welcome to the Morphological Classification of Galaxies project repository. In this repository, I am sharing a data science project that I completed last year. The primary objective of this project is to develop classifiers for galaxy classification. The methodology involves utilizing classical machine learning models such as decision trees and neural networks for image analysis. Additionally, the project explores unsupervised learning techniques.
 
 ## Data Source
 
@@ -10,7 +10,9 @@ The dataset used in this project is sourced from the Sloan Digital Sky Survey (S
 
 ## Current State
 
-As of now, the repository contains two notebooks. The first one serves as a comprehensive exploration of the dataset, encompassing data curation and visualization. Additionally, there is an unsupervised learning analysis focused on the dataset's tabular aspects, excluding the image-related components.
+As of the latest update, the repository now includes three notebooks. The initial notebook offers a comprehensive exploration of the dataset, encompassing data curation and visualization. Additionally, there is an unsupervised learning analysis focused on the dataset's tabular aspects, excluding image-related components.
+
+Also, a new addition to the repository is the supervised learning notebook. This notebook features the implementation of a neural network using Keras, along with various strategies employing random forests. It provides insights into different supervised learning techniques applied to the morphological classification of galaxies.
 
 Please note that this project is a work in progress, and updates will be provided as new developments unfold. Your feedback and contributions are highly welcome. Thank you for your interest in the Morphological Classification of Galaxies project!
 
