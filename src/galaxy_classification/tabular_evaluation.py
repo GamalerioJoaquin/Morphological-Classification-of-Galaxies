@@ -50,6 +50,14 @@ FEATURE_NAMES = [
     "petroR90_r",
     "z",
 ]
+MAGNITUDE_COLUMNS = [
+    "modelMag_u",
+    "modelMag_g",
+    "modelMag_r",
+    "modelMag_i",
+    "modelMag_z",
+]
+INVALID_MAGNITUDE_ABS_LIMIT = 100.0
 
 
 class QuantileClipper(BaseEstimator, TransformerMixin):
@@ -103,12 +111,15 @@ def select_modeling_rows(prepared: pd.DataFrame) -> pd.DataFrame:
 def build_feature_matrix(frame: pd.DataFrame) -> pd.DataFrame:
     """Create interpretable photometric colors plus size and redshift."""
 
+    magnitudes = frame[MAGNITUDE_COLUMNS].mask(
+        frame[MAGNITUDE_COLUMNS].abs().gt(INVALID_MAGNITUDE_ABS_LIMIT)
+    )
     features = pd.DataFrame(index=frame.index)
-    features["modelMag_r"] = frame["modelMag_r"]
-    features["color_u_minus_g"] = frame["modelMag_u"] - frame["modelMag_g"]
-    features["color_g_minus_r"] = frame["modelMag_g"] - frame["modelMag_r"]
-    features["color_r_minus_i"] = frame["modelMag_r"] - frame["modelMag_i"]
-    features["color_i_minus_z"] = frame["modelMag_i"] - frame["modelMag_z"]
+    features["modelMag_r"] = magnitudes["modelMag_r"]
+    features["color_u_minus_g"] = magnitudes["modelMag_u"] - magnitudes["modelMag_g"]
+    features["color_g_minus_r"] = magnitudes["modelMag_g"] - magnitudes["modelMag_r"]
+    features["color_r_minus_i"] = magnitudes["modelMag_r"] - magnitudes["modelMag_i"]
+    features["color_i_minus_z"] = magnitudes["modelMag_i"] - magnitudes["modelMag_z"]
     features["petroR90_r"] = frame["petroR90_r"]
     features["z"] = frame["z"]
     return features[FEATURE_NAMES]
@@ -412,6 +423,10 @@ def run_evaluation(
             ),
         },
         "features": FEATURE_NAMES,
+        "invalid_magnitude_policy": (
+            f"absolute magnitude values above {INVALID_MAGNITUDE_ABS_LIMIT:g} "
+            "are treated as missing before fold-local imputation"
+        ),
         "split": {
             "development_rows": int(len(development_indices)),
             "test_rows": int(len(test_indices)),

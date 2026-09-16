@@ -75,6 +75,17 @@ def test_feature_matrix_contains_no_identifiers_or_targets() -> None:
     assert np.isfinite(features.to_numpy()).all()
 
 
+def test_invalid_magnitudes_become_missing_before_pipeline() -> None:
+    selected = select_modeling_rows(sample_prepared_data())
+    selected.loc[selected.index[0], "modelMag_u"] = -9_999
+    selected.loc[selected.index[1], "modelMag_r"] = 20_000
+    features = build_feature_matrix(selected)
+
+    assert pd.isna(features.loc[selected.index[0], "color_u_minus_g"])
+    assert pd.isna(features.loc[selected.index[1], "modelMag_r"])
+    assert pd.isna(features.loc[selected.index[1], "color_g_minus_r"])
+
+
 def test_quantile_clipper_uses_only_fitted_values() -> None:
     training = np.array([[0.0], [1.0], [2.0], [100.0]])
     clipper = QuantileClipper(lower=0.0, upper=0.75).fit(training)

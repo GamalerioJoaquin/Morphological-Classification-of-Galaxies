@@ -9,20 +9,20 @@
       "macro_f1_std": 0.001741019491017826
     },
     "logistic_regression": {
-      "accuracy_mean": 0.8132560243313475,
-      "accuracy_std": 0.013017353096923217,
-      "balanced_accuracy_mean": 0.8362091998875538,
-      "balanced_accuracy_std": 0.010719053143804575,
-      "macro_f1_mean": 0.7702043385503798,
-      "macro_f1_std": 0.01448624276818436
+      "accuracy_mean": 0.8728696188375467,
+      "accuracy_std": 0.005922987747738002,
+      "balanced_accuracy_mean": 0.8806985707839662,
+      "balanced_accuracy_std": 0.004607509082756157,
+      "macro_f1_mean": 0.8337745976202485,
+      "macro_f1_std": 0.006692158883322324
     },
     "random_forest": {
       "best_parameters": {
         "model__max_depth": null,
         "model__min_samples_leaf": 5
       },
-      "macro_f1_mean": 0.8919798392384961,
-      "macro_f1_std": 0.004344447874851098
+      "macro_f1_mean": 0.8900014873504715,
+      "macro_f1_std": 0.004917819849336968
     }
   },
   "excluded": {
@@ -69,68 +69,69 @@
       }
     },
     "logistic_regression": {
-      "accuracy": 0.8259906152241918,
-      "balanced_accuracy": 0.8559542964069345,
+      "accuracy": 0.8826903023983316,
+      "balanced_accuracy": 0.8918572346703879,
       "confusion_matrix": [
         [
           1465,
           149
         ],
         [
-          1186,
-          4872
+          751,
+          5307
         ]
       ],
-      "macro_f1": 0.7832444322121411,
+      "macro_f1": 0.8434236717611572,
       "per_class": {
         "elliptical": {
-          "f1": 0.6869871043376319,
-          "precision": 0.5526216522067144,
+          "f1": 0.7650130548302871,
+          "precision": 0.6611010830324909,
           "recall": 0.9076827757125155,
           "support": 1614
         },
         "spiral": {
-          "f1": 0.8795017600866504,
-          "precision": 0.9703246365265883,
-          "recall": 0.8042258171013535,
+          "f1": 0.9218342886920271,
+          "precision": 0.9726906158357771,
+          "recall": 0.8760316936282602,
           "support": 6058
         }
       }
     },
     "random_forest": {
-      "accuracy": 0.9324817518248175,
-      "balanced_accuracy": 0.9227040303910607,
+      "accuracy": 0.9326120959332638,
+      "balanced_accuracy": 0.9214230427634069,
       "confusion_matrix": [
         [
-          1462,
-          152
+          1456,
+          158
         ],
         [
-          366,
-          5692
+          359,
+          5699
         ]
       ],
-      "macro_f1": 0.902992001988738,
+      "macro_f1": 0.9029182479620458,
       "macro_f1_group_bootstrap_interval": {
-        "lower_95": 0.8951047400750914,
-        "upper_95": 0.9109363961816374
+        "lower_95": 0.8945600706116416,
+        "upper_95": 0.9114242776768787
       },
       "per_class": {
         "elliptical": {
-          "f1": 0.8495061011040094,
-          "precision": 0.799781181619256,
-          "recall": 0.9058240396530359,
+          "f1": 0.8492271799358414,
+          "precision": 0.8022038567493113,
+          "recall": 0.9021065675340768,
           "support": 1614
         },
         "spiral": {
-          "f1": 0.9564779028734666,
-          "precision": 0.973990417522245,
-          "recall": 0.9395840211290855,
+          "f1": 0.9566093159882502,
+          "precision": 0.9730237322861534,
+          "recall": 0.9407395179927369,
           "support": 6058
         }
       }
     }
   },
+  "invalid_magnitude_policy": "absolute magnitude values above 100 are treated as missing before fold-local imputation",
   "random_state": 42,
   "selected_model": "random_forest",
   "selection_metric": "four_fold_group_cv_macro_f1",

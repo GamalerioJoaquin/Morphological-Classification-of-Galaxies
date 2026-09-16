@@ -21,8 +21,10 @@ preprocessing, or resampling before the holdout split.
 - Leakage control: no coordinate group appears in both partitions. The nearest
   test-to-development coordinate separation is 5.52 arcseconds; none are within
   5 arcseconds and three are within 10 arcseconds.
-- Preprocessing: 1st/99th percentile clipping, median imputation, and scaling
-  where applicable, all fitted inside the relevant training fold.
+- Preprocessing: invalid magnitude artifacts (`abs(value) > 100`) become
+  missing, followed by 1st/99th percentile clipping, median imputation, and
+  scaling where applicable. Learned steps are fitted inside the relevant
+  training fold.
 
 The evaluated features are r-band magnitude, four adjacent-band color
 differences, Petrosian radius, and redshift. Identifiers, row numbers, targets,
@@ -34,7 +36,7 @@ the damaged `objID`, and assigned labels are not model inputs.
 |---|---:|---|
 | Prior dummy | 0.439 ± 0.002 | Predicts the majority class |
 | Balanced logistic regression | 0.770 ± 0.014 | Linear baseline |
-| Balanced random forest | **0.892 ± 0.004** | Selected by development CV |
+| Balanced random forest | **0.890 ± 0.005** | Selected by development CV |
 
 The selected forest uses 200 trees, unlimited depth, and a minimum of five
 samples per leaf. The small search did not inspect the held-out test set.
@@ -45,7 +47,7 @@ samples per leaf. The small search did not inspect the held-out test set.
 |---|---:|---:|---:|
 | Prior dummy | 0.790 | 0.500 | 0.441 |
 | Balanced logistic regression | 0.826 | 0.856 | 0.783 |
-| Balanced random forest | **0.932** | **0.923** | **0.903** |
+| Balanced random forest | **0.933** | **0.921** | **0.903** |
 
 The group-bootstrap 95% interval for the selected model's macro F1 is
 0.895–0.911.
@@ -54,8 +56,8 @@ Selected-model class metrics:
 
 | Class | Precision | Recall | F1 | Support |
 |---|---:|---:|---:|---:|
-| Elliptical | 0.800 | 0.906 | 0.850 | 1,614 |
-| Spiral | 0.974 | 0.940 | 0.956 | 6,058 |
+| Elliptical | 0.802 | 0.902 | 0.849 | 1,614 |
+| Spiral | 0.973 | 0.941 | 0.957 | 6,058 |
 
 ![Held-out test confusion matrix](../reports/figures/tabular_confusion_matrix.png)
 
