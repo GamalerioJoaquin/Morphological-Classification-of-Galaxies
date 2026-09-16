@@ -16,6 +16,36 @@ Also, a new addition to the repository is the supervised learning notebook. This
 
 Please note that this project is a work in progress, and updates will be provided as new developments unfold. Your feedback and contributions are highly welcome. Thank you for your interest in the Morphological Classification of Galaxies project!
 
+## Environment setup
+
+The project is tested with Python 3.10. The original `requirements.txt` was a
+platform-specific Conda export and could not be installed with `pip`; it has
+been replaced by portable direct dependencies.
+
+Using Conda or Miniforge:
+
+```bash
+conda env create -f environment.yml
+conda activate galaxy-classification
+python scripts/validate_environment.py
+```
+
+For an existing Python 3.10 environment:
+
+```bash
+python -m pip install -r requirements.txt
+python scripts/validate_environment.py
+```
+
+The current notebooks are historical artifacts and are not yet guaranteed to
+execute cleanly from top to bottom. Environment validation confirms dependency
+availability; notebook and data-pipeline corrections are tracked separately.
+
+## License
+
+The repository's original code is available under the [MIT License](LICENSE).
+SDSS data and imagery remain subject to their own attribution and usage terms.
+
 
 
 
