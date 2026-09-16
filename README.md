@@ -62,6 +62,23 @@ The generated prepared dataset is intentionally not committed. See the
 [data card](docs/data-card.md) for provenance, identity, label, and
 transformation policies.
 
+## Reproducible tabular baseline
+
+The primary supervised task compares confident elliptical and spiral labels.
+Uncertain rows and coordinate groups with conflicting labels are excluded from
+model fitting, while repeated coordinate groups are kept entirely within one
+partition to prevent train/test leakage.
+
+```bash
+python scripts/train_tabular.py
+```
+
+Model selection uses group-aware cross-validation on the development set. The
+held-out test partition is used once after selection. Preprocessing, including
+quantile clipping and median imputation, is fitted inside each training fold.
+See the [verified results](docs/results.md) for the complete evaluation and
+limitations.
+
 ## License
 
 The repository's original code is available under the [MIT License](LICENSE).
