@@ -6,7 +6,10 @@ Welcome to the Morphological Classification of Galaxies project repository. In t
 
 ## Data Source
 
-The dataset used in this project is sourced from the Sloan Digital Sky Survey (SDSS). The SDSS is a significant multi-spectral imaging and spectroscopic redshift survey conducted using a dedicated 2.5-m wide-angle optical telescope located at the Apache Point Observatory in New Mexico, United States.
+The local dataset is a legacy course asset described as being derived from the
+Sloan Digital Sky Survey (SDSS). Its original SDSS release and extraction query
+are unavailable, so the project documents and verifies the supplied file
+without claiming reproducible upstream provenance.
 
 ## Current State
 
@@ -40,6 +43,24 @@ python scripts/validate_environment.py
 The current notebooks are historical artifacts and are not yet guaranteed to
 execute cleanly from top to bottom. Environment validation confirms dependency
 availability; notebook and data-pipeline corrections are tracked separately.
+
+## Data integrity workflow
+
+`galaxias_1.csv` is retained as an immutable legacy course asset. Its stored
+`objID` values have lost precision and must not be used as unique identifiers.
+The replacement workflow preserves every source row, adds deterministic lineage
+and coordinate-group identifiers, and keeps `uncertain` distinct from any
+irregular morphology class.
+
+```bash
+python scripts/audit_data.py
+python scripts/build_dataset.py
+pytest
+```
+
+The generated prepared dataset is intentionally not committed. See the
+[data card](docs/data-card.md) for provenance, identity, label, and
+transformation policies.
 
 ## License
 

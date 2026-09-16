@@ -34,3 +34,6 @@ protobuf==3.19.6
 # PyTorch image-pipeline foundation
 torch==2.0.1
 torchvision==0.15.2
+
+# Test tooling
+pytest==7.2.0
