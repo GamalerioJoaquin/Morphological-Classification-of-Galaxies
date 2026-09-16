@@ -1,0 +1,10 @@
+{
+  "asset": "galaxias_1.csv",
+  "provenance": "legacy_course_asset",
+  "upstream_query": null,
+  "upstream_release": null,
+  "sha256": "47ee7559205b221ca5d7ff4407b6e4839a5aa693e9a14269a0a3657c0023f298",
+  "rows": 92102,
+  "columns": 14,
+  "identity_policy": "The stored objID is precision-damaged and is retained only as legacy_objID. Stable source-row identity is derived from this asset checksum and its one-based data-row number. Exact ra/dec pairs define coordinate groups for leakage control and conflict reporting; rows are not automatically deduplicated."
+}
