@@ -3,3 +3,23 @@
 modelo.h5
 images/
 images_test/
+
+# Python-generated files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local environments and editors
+.venv/
+venv/
+.env
+.idea/
+.vscode/
+
+# Generated project artifacts
+data/interim/
+data/processed/
+models/
+reports/generated/
