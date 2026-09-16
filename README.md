@@ -79,6 +79,17 @@ quantile clipping and median imputation, is fitted inside each training fold.
 See the [verified results](docs/results.md) for the complete evaluation and
 limitations.
 
+## Reproducible unsupervised analysis
+
+The clustering workflow aggregates repeated observations by exact coordinate,
+selects the number of clusters using label-independent silhouette and stability
+criteria, and fits PCA and t-SNE using scientific features only. Cluster labels
+and source labels are attached after each embedding is complete.
+
+```bash
+python scripts/run_unsupervised.py
+```
+
 ## License
 
 The repository's original code is available under the [MIT License](LICENSE).

@@ -81,3 +81,75 @@ python scripts/train_tabular.py
   survey or independently labeled validation set.
 - Feature clipping is a pragmatic training-only robustness step, not a
   scientifically validated replacement for missing-value flags.
+
+## Unsupervised analysis
+
+The repaired unsupervised workflow operates on 83,806 exact-coordinate groups.
+Repeated measurements at the same coordinates are aggregated by their median,
+so frequently repeated positions do not receive extra weight. Input features
+are the same seven photometric measurements used by the supervised baseline.
+Identifiers, row indices, source labels, and cluster assignments are excluded.
+Corrupt magnitude artifacts with absolute values above 100 become missing
+before coordinate aggregation and are imputed after aggregation.
+
+### Cluster selection
+
+The number of clusters is selected without using morphology labels. Each
+candidate is fitted with three seeds and 20 K-means initializations per seed.
+Selection maximizes mean silhouette among candidates with mean pairwise
+stability ARI of at least 0.90.
+
+| Clusters | Silhouette | Stability ARI |
+|---:|---:|---:|
+| 2 | 0.316 | 0.999 |
+| 3 | **0.319** | **0.997** |
+| 4 | 0.222 | 0.978 |
+| 5 | 0.224 | 0.983 |
+| 6 | 0.215 | 0.961 |
+
+`k=3` is selected, although its silhouette advantage over `k=2` is small. This
+supports using three groups as a compact exploratory segmentation, not as proof
+that the data contain three physical morphology classes.
+
+![Cluster selection](../reports/figures/cluster_selection.png)
+
+### Feature-only projections
+
+PCA is fitted to preprocessed features before cluster IDs are attached. The
+first component explains 51.5% of variance and the second 28.5%, for 80.0%
+combined. Seeded t-SNE is fitted independently to a fixed 5,000-coordinate
+sample, also without cluster or source labels as inputs.
+
+![PCA clusters](../reports/figures/pca_clusters.png)
+
+![t-SNE clusters](../reports/figures/tsne_clusters.png)
+
+The three regions primarily describe photometric gradients:
+
+- Cluster 0: brighter, larger, redder, and lower-redshift coordinate groups.
+- Cluster 1: intermediate brightness, red colors, smaller radius, and higher
+  median redshift.
+- Cluster 2: fainter, bluer coordinate groups with smaller median radius.
+
+Cluster numbers are arbitrary and do not imply an ordering.
+
+### External morphology comparison
+
+After clustering was complete, the assignments were compared with the 34,813
+coordinate groups carrying consistent elliptical or spiral labels:
+
+- adjusted Rand index: 0.040;
+- normalized mutual information: 0.098;
+- homogeneity: 0.152;
+- completeness: 0.072.
+
+This weak agreement shows that the clusters do not recover the supervised
+elliptical/spiral target. Source labels were not used for cluster selection or
+embedding, and `uncertain` is not interpreted as an irregular morphology class.
+
+The complete result is stored in
+`reports/results/unsupervised_metrics.json` and can be regenerated with:
+
+```bash
+python scripts/run_unsupervised.py
+```
