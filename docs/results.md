@@ -7,6 +7,11 @@ under the repaired workflow. Historical notebook metrics are not used as
 portfolio evidence because they relied on damaged identity, globally fitted
 preprocessing, or resampling before the holdout split.
 
+No image-classification result is currently reported. The former notebook CNN
+run was an unsuccessful, non-reproducible prototype and its saved output is not
+portfolio evidence. The replacement PyTorch pipeline remains blocked on the
+selection of a traceable image dataset; see [image-pipeline.md](image-pipeline.md).
+
 ## Evaluation design
 
 - Source: checksum-verified legacy course asset.

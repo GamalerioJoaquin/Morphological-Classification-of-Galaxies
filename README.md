@@ -15,7 +15,10 @@ without claiming reproducible upstream provenance.
 
 As of the latest update, the repository now includes three jupyter notebooks. The initial notebook offers a comprehensive exploration of the dataset, encompassing data curation and visualization. Additionally, there is an unsupervised learning analysis focused on the dataset's tabular aspects, excluding image-related components.
 
-Also, a new addition to the repository is the supervised learning notebook. This notebook features the implementation of a neural network using Keras, along with various strategies employing random forests. It provides insights into different supervised learning techniques applied to the morphological classification of galaxies.
+The historical supervised notebook contains early Keras and random-forest
+prototypes. Its image experiment is not treated as a result. A replacement
+PyTorch image pipeline is now scaffolded, but remains dataset-blocked and makes
+no performance claim until a traceable image dataset is selected.
 
 Please note that this project is a work in progress, and updates will be provided as new developments unfold. Your feedback and contributions are highly welcome. Thank you for your interest in the Morphological Classification of Galaxies project!
 
@@ -89,6 +92,13 @@ and source labels are attached after each embedding is complete.
 ```bash
 python scripts/run_unsupervised.py
 ```
+
+## Image-classification prototype
+
+The repository includes a small PyTorch CNN and a strict manifest-based image
+loader. There is currently no approved image dataset, saved image metric, or
+trained model. See the [image-pipeline status and data contract](docs/image-pipeline.md)
+before attempting training.
 
 ## License
 

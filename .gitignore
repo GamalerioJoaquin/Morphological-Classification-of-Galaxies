@@ -3,6 +3,8 @@
 modelo.h5
 images/
 images_test/
+data/images/
+data/image-manifests/local*.csv
 
 # Python-generated files
 __pycache__/
