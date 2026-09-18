@@ -180,6 +180,29 @@ def augment_train_image(image: torch.Tensor) -> torch.Tensor:
     return image
 
 
+def augment_training_batch(inputs: torch.Tensor) -> torch.Tensor:
+    """Apply per-image right-angle rotations and flips on the training device."""
+    if inputs.ndim != 4:
+        raise ValueError(f"Expected NCHW batch, received shape {tuple(inputs.shape)}.")
+
+    rotations = torch.randint(0, 4, (len(inputs),), device=inputs.device)
+    augmented = torch.empty_like(inputs)
+    for turns in range(4):
+        mask = rotations.eq(turns)
+        if mask.any():
+            augmented[mask] = torch.rot90(inputs[mask], turns, dims=(2, 3))
+
+    horizontal_flips = torch.rand(len(inputs), device=inputs.device).lt(0.5)
+    if horizontal_flips.any():
+        augmented[horizontal_flips] = torch.flip(
+            augmented[horizontal_flips], dims=(3,)
+        )
+    vertical_flips = torch.rand(len(inputs), device=inputs.device).lt(0.5)
+    if vertical_flips.any():
+        augmented[vertical_flips] = torch.flip(augmented[vertical_flips], dims=(2,))
+    return augmented
+
+
 def seed_everything(seed: int) -> None:
     random.seed(seed)
     np.random.seed(seed)
@@ -202,7 +225,7 @@ def make_loaders(
                 array_path,
                 manifest,
                 split,
-                augment=split == "train",
+                augment=False,
             ),
             batch_size=config.batch_size,
             shuffle=split == "train",
@@ -239,6 +262,7 @@ def run_epoch(
         inputs = inputs.to(device, non_blocking=True)
         targets = targets.to(device, non_blocking=True)
         if training:
+            inputs = augment_training_batch(inputs)
             optimizer.zero_grad()
         with torch.set_grad_enabled(training), torch.amp.autocast(
             device_type=device.type,

@@ -13,6 +13,7 @@ from galaxy_classification.galaxy10 import (
     Galaxy10DataError,
     Galaxy10H5Dataset,
     Galaxy10NpyDataset,
+    augment_training_batch,
     build_split_manifest,
     validate_manifest,
 )
@@ -71,6 +72,15 @@ def test_cnn_returns_ten_raw_logits() -> None:
     logits = model(torch.zeros(2, 3, 64, 64))
 
     assert logits.shape == (2, 10)
+
+
+def test_batch_augmentation_preserves_nchw_shape_and_dtype() -> None:
+    inputs = torch.rand(4, 3, 8, 8)
+
+    augmented = augment_training_batch(inputs)
+
+    assert augmented.shape == inputs.shape
+    assert augmented.dtype == inputs.dtype
 
 
 def test_numpy_dataset_reads_contiguous_training_cache(tmp_path: Path) -> None:
