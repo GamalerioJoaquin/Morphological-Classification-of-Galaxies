@@ -14,7 +14,6 @@ import torch
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score
 from torch import nn
 from torch.utils.data import DataLoader, Dataset
-from torchvision import transforms
 
 
 from .galaxy10_data import (
@@ -50,7 +49,6 @@ class Galaxy10H5Dataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
         self.indices = rows["sample_index"].astype(int).to_numpy()
         self.labels = rows["label"].astype(int).to_numpy()
         self.augment = augment
-        self.transform = make_train_transform() if augment else None
         self._file: h5py.File | None = None
 
     def __getstate__(self) -> dict[str, Any]:
@@ -69,8 +67,8 @@ class Galaxy10H5Dataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
     def __getitem__(self, item: int) -> tuple[torch.Tensor, torch.Tensor]:
         image = np.asarray(self._images()[self.indices[item]], dtype=np.float32)
         image = torch.from_numpy(image).permute(2, 0, 1) / 255.0
-        if self.transform is not None:
-            image = self.transform(image)
+        if self.augment:
+            image = augment_train_image(image)
         target = torch.tensor(self.labels[item], dtype=torch.long)
         return image, target
 
@@ -95,7 +93,6 @@ class Galaxy10NpyDataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
         self.indices = rows["sample_index"].astype(int).to_numpy()
         self.labels = rows["label"].astype(int).to_numpy()
         self.augment = augment
-        self.transform = make_train_transform() if augment else None
         self._images: np.ndarray | None = None
 
     def __getstate__(self) -> dict[str, Any]:
@@ -120,8 +117,8 @@ class Galaxy10NpyDataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
     def __getitem__(self, item: int) -> tuple[torch.Tensor, torch.Tensor]:
         image = np.array(self._array()[self.indices[item]], dtype=np.float32)
         image = torch.from_numpy(image).permute(2, 0, 1).div_(255.0)
-        if self.transform is not None:
-            image = self.transform(image)
+        if self.augment:
+            image = augment_train_image(image)
         target = torch.tensor(self.labels[item], dtype=torch.long)
         return image, target
 
@@ -173,26 +170,14 @@ class Galaxy10TrainingConfig:
     random_state: int = 42
 
 
-def make_train_transform() -> transforms.Compose:
-    """Return modest morphology-preserving augmentation for training images."""
-    return transforms.Compose(
-        [
-            transforms.RandomRotation(180),
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomVerticalFlip(),
-            transforms.RandomAffine(
-                degrees=0,
-                translate=(0.05, 0.05),
-                scale=(0.95, 1.05),
-            ),
-            transforms.ColorJitter(
-                brightness=0.12,
-                contrast=0.12,
-                saturation=0.05,
-                hue=0.02,
-            ),
-        ]
-    )
+def augment_train_image(image: torch.Tensor) -> torch.Tensor:
+    """Apply inexpensive orientation-preserving training augmentation."""
+    image = torch.rot90(image, int(torch.randint(0, 4, ()).item()), dims=(1, 2))
+    if bool(torch.randint(0, 2, ()).item()):
+        image = torch.flip(image, dims=(1,))
+    if bool(torch.randint(0, 2, ()).item()):
+        image = torch.flip(image, dims=(2,))
+    return image
 
 
 def seed_everything(seed: int) -> None:

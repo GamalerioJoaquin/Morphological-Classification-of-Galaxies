@@ -168,9 +168,9 @@ batch normalization, adaptive pooling, one hidden classifier layer, dropout,
 and ten raw class logits for `CrossEntropyLoss`. Images enter as three RGB
 channels at `256 x 256`; with `base_channels=48`, the convolutional widths are
 `48 -> 96 -> 192 -> 384`. Training uses class weights derived only from the
-training partition and dynamic augmentation only for that partition: arbitrary
-rotations, horizontal and vertical flips, small translations and scale changes,
-and mild brightness, contrast, saturation, and hue changes.
+training partition and dynamic augmentation only for that partition: right-angle
+rotations plus horizontal and vertical flips. These operations preserve the
+`256 x 256 x 3` input shape and avoid interpolation during the grid search.
 
 The bounded grid compares two learning rates (`1e-3`, `3e-4`), three dropout
 values (`0.3`, `0.5`, `0.7`), two batch sizes (`64`, `128`), and two weight
