@@ -1,0 +1,164 @@
+{
+  "cross_validation": {
+    "dummy_prior": {
+      "accuracy_mean": 0.7831611495428134,
+      "accuracy_std": 0.005530688981246001,
+      "balanced_accuracy_mean": 0.5,
+      "balanced_accuracy_std": 0.0,
+      "macro_f1_mean": 0.4391927901383852,
+      "macro_f1_std": 0.001741019491017826
+    },
+    "logistic_regression": {
+      "accuracy_mean": 0.8728696188375467,
+      "accuracy_std": 0.005922987747738002,
+      "balanced_accuracy_mean": 0.8806985707839662,
+      "balanced_accuracy_std": 0.004607509082756157,
+      "macro_f1_mean": 0.8337745976202485,
+      "macro_f1_std": 0.006692158883322324
+    },
+    "random_forest": {
+      "best_parameters": {
+        "model__max_depth": null,
+        "model__min_samples_leaf": 5
+      },
+      "macro_f1_mean": 0.8900014873504715,
+      "macro_f1_std": 0.004917819849336968
+    }
+  },
+  "excluded": {
+    "coordinate_label_conflict_rows": 22,
+    "uncertain_rows": 53799
+  },
+  "features": [
+    "modelMag_r",
+    "color_u_minus_g",
+    "color_g_minus_r",
+    "color_r_minus_i",
+    "color_i_minus_z",
+    "petroR90_r",
+    "z"
+  ],
+  "held_out_test": {
+    "dummy_prior": {
+      "accuracy": 0.7896246089676746,
+      "balanced_accuracy": 0.5,
+      "confusion_matrix": [
+        [
+          0,
+          1614
+        ],
+        [
+          0,
+          6058
+        ]
+      ],
+      "macro_f1": 0.44122359796067007,
+      "per_class": {
+        "elliptical": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1614
+        },
+        "spiral": {
+          "f1": 0.8824471959213401,
+          "precision": 0.7896246089676746,
+          "recall": 1.0,
+          "support": 6058
+        }
+      }
+    },
+    "logistic_regression": {
+      "accuracy": 0.8826903023983316,
+      "balanced_accuracy": 0.8918572346703879,
+      "confusion_matrix": [
+        [
+          1465,
+          149
+        ],
+        [
+          751,
+          5307
+        ]
+      ],
+      "macro_f1": 0.8434236717611572,
+      "per_class": {
+        "elliptical": {
+          "f1": 0.7650130548302871,
+          "precision": 0.6611010830324909,
+          "recall": 0.9076827757125155,
+          "support": 1614
+        },
+        "spiral": {
+          "f1": 0.9218342886920271,
+          "precision": 0.9726906158357771,
+          "recall": 0.8760316936282602,
+          "support": 6058
+        }
+      }
+    },
+    "random_forest": {
+      "accuracy": 0.9326120959332638,
+      "balanced_accuracy": 0.9214230427634069,
+      "confusion_matrix": [
+        [
+          1456,
+          158
+        ],
+        [
+          359,
+          5699
+        ]
+      ],
+      "macro_f1": 0.9029182479620458,
+      "macro_f1_group_bootstrap_interval": {
+        "lower_95": 0.8945600706116416,
+        "upper_95": 0.9114242776768787
+      },
+      "per_class": {
+        "elliptical": {
+          "f1": 0.8492271799358414,
+          "precision": 0.8022038567493113,
+          "recall": 0.9021065675340768,
+          "support": 1614
+        },
+        "spiral": {
+          "f1": 0.9566093159882502,
+          "precision": 0.9730237322861534,
+          "recall": 0.9407395179927369,
+          "support": 6058
+        }
+      }
+    }
+  },
+  "invalid_magnitude_policy": "absolute magnitude values above 100 are treated as missing before fold-local imputation",
+  "random_state": 42,
+  "selected_model": "random_forest",
+  "selection_metric": "four_fold_group_cv_macro_f1",
+  "source_sha256": "47ee7559205b221ca5d7ff4407b6e4839a5aa693e9a14269a0a3657c0023f298",
+  "split": {
+    "coordinate_group_overlap": 0,
+    "development_class_counts": {
+      "elliptical": 6637,
+      "spiral": 23972
+    },
+    "development_coordinate_groups": 27850,
+    "development_rows": 30609,
+    "proximity_audit": {
+      "minimum_cross_split_separation_arcsec": 5.522461492362111,
+      "test_rows_with_development_neighbor_within_arcsec": {
+        "1": 0,
+        "10": 3,
+        "30": 18,
+        "5": 0
+      }
+    },
+    "test_class_counts": {
+      "elliptical": 1614,
+      "spiral": 6058
+    },
+    "test_coordinate_groups": 6963,
+    "test_rows": 7672
+  },
+  "target": "elliptical_vs_spiral"
+}

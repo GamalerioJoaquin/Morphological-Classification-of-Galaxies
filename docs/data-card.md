@@ -67,6 +67,13 @@ Extreme and sentinel-like values remain present. Their scientific meaning
 cannot be established from the course asset alone, so any later replacement
 policy must be explicit, tested, and fitted without using evaluation data.
 
+For modeling, absolute magnitude values above 100 are treated as invalid rather
+than clipped as meaningful observations. This fixed guard captures `-9999` and
+multi-thousand source artifacts while remaining far outside the plausible
+range of the supplied sample. The resulting missing feature values are imputed
+inside training folds; the immutable source and prepared lineage dataset remain
+unchanged.
+
 ## Reproducible commands
 
 Audit the immutable source without writing outputs:

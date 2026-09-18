@@ -1,0 +1,153 @@
+{
+  "analysis_unit": "exact_coordinate_group",
+  "candidates": [
+    {
+      "k": 2,
+      "silhouette_mean": 0.3164864022009088,
+      "silhouette_std": 1.874709376053172e-05,
+      "stability_ari_mean": 0.9990456653707477,
+      "stability_ari_min": 0.9985686170875122
+    },
+    {
+      "k": 3,
+      "silhouette_mean": 0.31863266803250306,
+      "silhouette_std": 7.013652388191507e-05,
+      "stability_ari_mean": 0.997114466316321,
+      "stability_ari_min": 0.9961065176142666
+    },
+    {
+      "k": 4,
+      "silhouette_mean": 0.2221385479373362,
+      "silhouette_std": 0.00019751061274100393,
+      "stability_ari_mean": 0.9783964536853221,
+      "stability_ari_min": 0.9680744739979334
+    },
+    {
+      "k": 5,
+      "silhouette_mean": 0.22419877821361314,
+      "silhouette_std": 0.00030131498538442776,
+      "stability_ari_mean": 0.9829693428337795,
+      "stability_ari_min": 0.9775319208284062
+    },
+    {
+      "k": 6,
+      "silhouette_mean": 0.2152066878293285,
+      "silhouette_std": 0.0005118469965845695,
+      "stability_ari_mean": 0.9611042753008148,
+      "stability_ari_min": 0.9521562128488923
+    }
+  ],
+  "cluster_profiles": [
+    {
+      "cluster": 0,
+      "coordinate_groups": 13320,
+      "feature_medians": {
+        "color_g_minus_r": 0.788055,
+        "color_i_minus_z": 0.3017650000000005,
+        "color_r_minus_i": 0.3966750000000001,
+        "color_u_minus_g": 1.7027800000000006,
+        "modelMag_r": 14.65127,
+        "petroR90_r": 16.362835,
+        "z": 0.03152303
+      },
+      "proportion": 0.15893850082333008,
+      "source_label_counts_for_interpretation_only": {
+        "conflict": 11,
+        "elliptical": 2748,
+        "spiral": 7360,
+        "uncertain": 3201
+      }
+    },
+    {
+      "cluster": 1,
+      "coordinate_groups": 33241,
+      "feature_medians": {
+        "color_g_minus_r": 0.7711600000000001,
+        "color_i_minus_z": 0.29759000000000313,
+        "color_r_minus_i": 0.385675,
+        "color_u_minus_g": 1.6768449999999984,
+        "modelMag_r": 16.26144,
+        "petroR90_r": 7.206195,
+        "z": 0.04049543
+      },
+      "proportion": 0.39664224518530894,
+      "source_label_counts_for_interpretation_only": {
+        "conflict": 4,
+        "elliptical": 4547,
+        "spiral": 8820,
+        "uncertain": 19870
+      }
+    },
+    {
+      "cluster": 2,
+      "coordinate_groups": 37245,
+      "feature_medians": {
+        "color_g_minus_r": 0.4269550000000013,
+        "color_i_minus_z": 0.15952000000000055,
+        "color_r_minus_i": 0.24624999999999986,
+        "color_u_minus_g": 1.1353100000000005,
+        "modelMag_r": 17.0737,
+        "petroR90_r": 7.992433,
+        "z": 0.03425704
+      },
+      "proportion": 0.444419253991361,
+      "source_label_counts_for_interpretation_only": {
+        "conflict": 4,
+        "elliptical": 161,
+        "spiral": 11177,
+        "uncertain": 25903
+      }
+    }
+  ],
+  "coordinate_groups": 83806,
+  "excluded_from_features": [
+    "source_row_id",
+    "source_row_number",
+    "coordinate_id",
+    "legacy_objID",
+    "source_label",
+    "cluster"
+  ],
+  "external_label_comparison_not_used_for_selection": {
+    "adjusted_rand_index": 0.04040467526091849,
+    "completeness": 0.07244028939296995,
+    "homogeneity": 0.1522851534654542,
+    "normalized_mutual_information": 0.09817829656466785,
+    "rows": 34813
+  },
+  "input_features": [
+    "modelMag_r",
+    "color_u_minus_g",
+    "color_g_minus_r",
+    "color_r_minus_i",
+    "color_i_minus_z",
+    "petroR90_r",
+    "z"
+  ],
+  "pca": {
+    "explained_variance_ratio": [
+      0.5146138007066975,
+      0.28505024254325717
+    ],
+    "fit_input": "preprocessed features only",
+    "total_explained_variance": 0.7996640432499547
+  },
+  "preprocessing": {
+    "imputation": "median",
+    "invalid_magnitude_abs_limit": 100.0,
+    "quantile_clipping": [
+      0.01,
+      0.99
+    ],
+    "scaling": "robust"
+  },
+  "random_state": 42,
+  "selected_k": 3,
+  "selection_rule": "highest mean silhouette among candidates with mean pairwise stability ARI >= 0.90",
+  "source_sha256": "47ee7559205b221ca5d7ff4407b6e4839a5aa693e9a14269a0a3657c0023f298",
+  "tsne": {
+    "fit_input": "preprocessed features only",
+    "perplexity": 30,
+    "sample_size": 5000
+  }
+}
