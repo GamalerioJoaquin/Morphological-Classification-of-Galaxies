@@ -60,6 +60,12 @@ The evaluated features are r-band magnitude, four adjacent-band color
 differences, Petrosian radius, and redshift. Identifiers, row numbers, targets,
 the damaged `objID`, and assigned labels are not model inputs.
 
+## Best Validated Tabular Result
+
+The balanced random forest is the strongest validated result currently in the
+portfolio. It belongs to the tabular SDSS-derived dataset and should not be
+compared as though it were a Galaxy10 image-classification score.
+
 ## Model selection
 
 | Model | Development CV macro F1 | Notes |
