@@ -1,23 +1,47 @@
 # Morphological Classification of Galaxies
 
-#### Work in Progress.
+#### First portfolio version
 
-Welcome to the Morphological Classification of Galaxies project repository. In this repository, I am sharing a data science project that I completed last year. The primary objective of this project is to develop classifiers for galaxy classification. The methodology involves utilizing classical machine learning models such as decision trees and neural networks for image analysis. Additionally, the project explores unsupervised learning techniques.
+This repository studies galaxy morphology through two complementary data
+modalities: a verified tabular baseline and a separate image-classification
+pipeline. The project combines reproducible data preparation, classical
+machine learning, unsupervised analysis, and a PyTorch CNN experiment.
 
-## Data Source
+## Two Different Datasets
 
-The local dataset is a legacy course asset described as being derived from the
-Sloan Digital Sky Survey (SDSS). Its original SDSS release and extraction query
-are unavailable, so the project documents and verifies the supplied file
-without claiming reproducible upstream provenance.
+The tabular and image analyses do not use the same dataset, objects, or labels.
+They are deliberately treated as separate scientific tasks:
+
+| Pipeline | Dataset and objects | Labels or target |
+|---|---|---|
+| Tabular supervised and unsupervised analysis | Legacy course asset described as derived from SDSS; rows are photometric observations grouped by coordinates | Confident `elliptical` versus `spiral`; `uncertain` and conflicting coordinate groups are excluded from the supervised task |
+| Image classification | Galaxy10 DECaLS; 17,736 RGB images from a Galaxy Zoo morphology dataset | Ten morphology classes, including `Merging Galaxies`, `Disturbed Galaxies`, smooth, spiral, and edge-on classes |
+
+The tabular rows cannot be interpreted as the same objects shown in the
+Galaxy10 images, and the two label systems are not interchangeable. The
+tabular dataset is retained as the primary reproducible baseline; Galaxy10 is a
+separate, more demanding image problem.
+
+The tabular asset is described as being derived from the Sloan Digital Sky
+Survey (SDSS), but its original release and extraction query are unavailable.
+The project therefore documents and verifies the supplied file without making
+a claim of fully reproducible upstream provenance.
 
 ## Current State
 
-As of the latest update, the repository now includes three jupyter notebooks. The initial notebook offers a comprehensive exploration of the dataset, encompassing data curation and visualization. Additionally, there is an unsupervised learning analysis focused on the dataset's tabular aspects, excluding image-related components.
+The repository contains a reproducible tabular baseline, a leakage-aware
+unsupervised analysis, Galaxy10 preparation and inspection notebooks, and a
+PyTorch image-training notebook with visible grid-search and epoch progress.
+The tabular model is currently the strongest validated result in the project.
 
-Also, a new addition to the repository is the supervised learning notebook. This notebook features the implementation of a neural network using Keras, along with various strategies employing random forests. It provides insights into different supervised learning techniques applied to the morphological classification of galaxies.
+The image pipeline is reported as an experimental result rather than as a
+replacement for the tabular task. Its baseline and follow-up metrics are
+documented in [verified results](docs/results.md), with no trained weights
+committed to the repository.
 
-Please note that this project is a work in progress, and updates will be provided as new developments unfold. Your feedback and contributions are highly welcome. Thank you for your interest in the Morphological Classification of Galaxies project!
+This is a suitable first presentable version of the portfolio: the main result
+is reproducible and clearly separated from the more computationally demanding
+image experiment.
 
 ## Environment setup
 
@@ -40,9 +64,8 @@ python -m pip install -r requirements.txt
 python scripts/validate_environment.py
 ```
 
-The current notebooks are historical artifacts and are not yet guaranteed to
-execute cleanly from top to bottom. Environment validation confirms dependency
-availability; notebook and data-pipeline corrections are tracked separately.
+The notebooks depend on the prepared datasets and the configured environment;
+the image training notebook requires a working CUDA-enabled PyTorch install.
 
 ## Data integrity workflow
 
@@ -90,15 +113,37 @@ and source labels are attached after each embedding is complete.
 python scripts/run_unsupervised.py
 ```
 
+## Image-classification prototype
+
+The selected image dataset is Galaxy10 DECaLS: 17,736 `256x256x3` galaxy images
+in ten Galaxy Zoo morphology classes. Individual images contain faint extended
+objects, bright central cores, low-contrast structure, background sources, and
+subtle differences between neighboring morphology classes. A merging galaxy can
+be visually ambiguous even for a human observer, which makes this a harder
+problem than the compact tabular baseline.
+
+![Galaxy10 DECaLS example labeled Merging Galaxies](reports/figures/galaxy10-merging-example.png)
+
+The computational cost is correspondingly high: the dataset contains billions
+of pixel values, training repeatedly reads large `256x256` batches, and the
+pipeline evaluates 24 CNN configurations before the final long training run.
+The current training path uses GPU mini-batch optimization, GPU-side
+right-angle rotation and flip augmentation, deterministic splits, and
+validation-only model selection.
+
+```bash
+python -m pip install --force-reinstall -r requirements-gpu.txt
+python scripts/check_torch_gpu.py
+python scripts/prepare_galaxy10.py
+jupyter lab notebooks/04-galaxy10-inspection.ipynb
+jupyter lab notebooks/05-galaxy10-pytorch-training.ipynb
+```
+
+Trained weights are not committed, but the historical baseline and latest image
+metrics are recorded in [verified results](docs/results.md). See the full
+[image-pipeline protocol](docs/image-pipeline.md).
+
 ## License
 
 The repository's original code is available under the [MIT License](LICENSE).
 SDSS data and imagery remain subject to their own attribution and usage terms.
-
-
-
-
-
-
-
-![Sample Image (5 channels)](/assets/img/galaxias.jpeg)

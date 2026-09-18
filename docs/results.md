@@ -7,6 +7,36 @@ under the repaired workflow. Historical notebook metrics are not used as
 portfolio evidence because they relied on damaged identity, globally fitted
 preprocessing, or resampling before the holdout split.
 
+The current Galaxy10 DECaLS baseline is preserved as historical output from
+commit `cb665ab`; it is not mixed with the next augmentation and grid-search
+experiment. See [image-pipeline.md](image-pipeline.md) for the current protocol.
+
+### Historical Galaxy10 baseline (`cb665ab`)
+
+This run used the original `base_channels=32` CNN (`32 -> 64 -> 128 -> 256`),
+learning rate `1e-3`, dropout `0.5`, batch size `64`, weighted cross-entropy,
+and rotation/flip augmentation. The best validation accuracy was `0.7568` at
+epoch 75, with validation macro-F1 `0.7352`. The one-time held-out test result
+was accuracy `0.7136` and macro-F1 `0.6988`. These values are historical
+reference points for the next experiment, not claims about the new protocol.
+
+### GPU augmentation experiment
+
+The next run used `base_channels=48`, right-angle rotations and horizontal or
+vertical flips on the GPU, one data-loading worker, and the 24-candidate grid
+with six-epoch patience. The grid selected learning rate `3e-4`, dropout `0.3`,
+batch size `64`, and weight decay `0`. After final training, the best
+validation accuracy was `0.7504` at epoch 75, with validation macro-F1 `0.7326`
+at that checkpoint. The held-out test result was accuracy `0.7230` and macro-F1
+`0.7037`.
+
+Relative to the baseline, validation accuracy and macro-F1 were slightly lower
+(`-0.0064` and approximately `-0.0026`), while test accuracy and macro-F1 were
+slightly higher (`+0.0094` and `+0.0049`). This is best described as similar
+performance rather than a demonstrated improvement. The ten-epoch grid scores
+are used only for selecting the final configuration and should not be compared
+directly with the 80-epoch final-training metrics.
+
 ## Evaluation design
 
 - Source: checksum-verified legacy course asset.
@@ -29,6 +59,12 @@ preprocessing, or resampling before the holdout split.
 The evaluated features are r-band magnitude, four adjacent-band color
 differences, Petrosian radius, and redshift. Identifiers, row numbers, targets,
 the damaged `objID`, and assigned labels are not model inputs.
+
+## Best Validated Tabular Result
+
+The balanced random forest is the strongest validated result currently in the
+portfolio. It belongs to the tabular SDSS-derived dataset and should not be
+compared as though it were a Galaxy10 image-classification score.
 
 ## Model selection
 
