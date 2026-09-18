@@ -3,9 +3,10 @@
 ## Current status
 
 Galaxy10 DECaLS is the selected dataset. The repository does not commit its
-2.54 GB HDF5 file, trained weights, or image metrics. Download, inspection, and
-training code are implemented but must still be run and reviewed before any
-performance result can be reported.
+2.54 GB HDF5 file or trained weights. The baseline training run is preserved as
+historical output in commit `cb665ab`; the current notebook defines a new
+augmentation and hyperparameter-search protocol that must be rerun before
+comparing new results.
 
 The historical Keras notebook experiment used too few images and an invalid
 evaluation design. Its saved outputs have been removed and it is not used as
@@ -162,12 +163,21 @@ This distinction follows the official access paths:
 
 ## Provisional model
 
-`Galaxy10CNN` is a moderate PyTorch baseline with four convolutional blocks,
-batch normalization, adaptive pooling, a hidden classifier layer, dropout, and
-ten raw class logits for `CrossEntropyLoss`. Training uses class weights
-derived only from the training partition and rotation/flip augmentation only
-for that partition. Six bounded candidates compare two learning rates and
-dropout values 0.3, 0.5, and 0.7, with early stopping on validation macro-F1.
+`Galaxy10CNN` is a moderate PyTorch model with four convolutional blocks,
+batch normalization, adaptive pooling, one hidden classifier layer, dropout,
+and ten raw class logits for `CrossEntropyLoss`. Images enter as three RGB
+channels at `256 x 256`; with `base_channels=48`, the convolutional widths are
+`48 -> 96 -> 192 -> 384`. Training uses class weights derived only from the
+training partition and dynamic augmentation only for that partition: arbitrary
+rotations, horizontal and vertical flips, small translations and scale changes,
+and mild brightness, contrast, saturation, and hue changes.
+
+The bounded grid compares two learning rates (`1e-3`, `3e-4`), three dropout
+values (`0.3`, `0.5`, `0.7`), two batch sizes (`64`, `128`), and two weight
+decay values (`0`, `1e-4`), for 24 candidates. Grid selection uses validation
+macro-F1 with six-epoch early stopping. The selected configuration is then
+retrained for up to 80 epochs, with patience 25 and checkpoint selection by
+validation accuracy. The test split is accessed only after that final training.
 
 The selected Galaxy10 experiment is run interactively from the training
 notebook after preparation:

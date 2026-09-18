@@ -14,6 +14,7 @@ import torch
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score
 from torch import nn
 from torch.utils.data import DataLoader, Dataset
+from torchvision import transforms
 
 
 from .galaxy10_data import (
@@ -49,6 +50,7 @@ class Galaxy10H5Dataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
         self.indices = rows["sample_index"].astype(int).to_numpy()
         self.labels = rows["label"].astype(int).to_numpy()
         self.augment = augment
+        self.transform = make_train_transform() if augment else None
         self._file: h5py.File | None = None
 
     def __getstate__(self) -> dict[str, Any]:
@@ -67,11 +69,8 @@ class Galaxy10H5Dataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
     def __getitem__(self, item: int) -> tuple[torch.Tensor, torch.Tensor]:
         image = np.asarray(self._images()[self.indices[item]], dtype=np.float32)
         image = torch.from_numpy(image).permute(2, 0, 1) / 255.0
-        if self.augment:
-            rotations = int(torch.randint(0, 4, ()).item())
-            image = torch.rot90(image, rotations, dims=(1, 2))
-            if bool(torch.randint(0, 2, ()).item()):
-                image = torch.flip(image, dims=(2,))
+        if self.transform is not None:
+            image = self.transform(image)
         target = torch.tensor(self.labels[item], dtype=torch.long)
         return image, target
 
@@ -96,6 +95,7 @@ class Galaxy10NpyDataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
         self.indices = rows["sample_index"].astype(int).to_numpy()
         self.labels = rows["label"].astype(int).to_numpy()
         self.augment = augment
+        self.transform = make_train_transform() if augment else None
         self._images: np.ndarray | None = None
 
     def __getstate__(self) -> dict[str, Any]:
@@ -120,11 +120,8 @@ class Galaxy10NpyDataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
     def __getitem__(self, item: int) -> tuple[torch.Tensor, torch.Tensor]:
         image = np.array(self._array()[self.indices[item]], dtype=np.float32)
         image = torch.from_numpy(image).permute(2, 0, 1).div_(255.0)
-        if self.augment:
-            rotations = int(torch.randint(0, 4, ()).item())
-            image = torch.rot90(image, rotations, dims=(1, 2))
-            if bool(torch.randint(0, 2, ()).item()):
-                image = torch.flip(image, dims=(2,))
+        if self.transform is not None:
+            image = self.transform(image)
         target = torch.tensor(self.labels[item], dtype=torch.long)
         return image, target
 
@@ -132,7 +129,7 @@ class Galaxy10NpyDataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
 class Galaxy10CNN(nn.Module):
     """Moderate four-block CNN for ten-class morphology classification."""
 
-    def __init__(self, base_channels: int = 16, dropout: float = 0.2) -> None:
+    def __init__(self, base_channels: int = 48, dropout: float = 0.2) -> None:
         super().__init__()
         channels = (
             base_channels,
@@ -168,11 +165,34 @@ class Galaxy10CNN(nn.Module):
 @dataclass(frozen=True)
 class Galaxy10TrainingConfig:
     learning_rate: float = 1e-3
-    base_channels: int = 16
+    base_channels: int = 48
     dropout: float = 0.2
+    weight_decay: float = 0.0
     batch_size: int = 64
     epochs: int = 10
     random_state: int = 42
+
+
+def make_train_transform() -> transforms.Compose:
+    """Return modest morphology-preserving augmentation for training images."""
+    return transforms.Compose(
+        [
+            transforms.RandomRotation(180),
+            transforms.RandomHorizontalFlip(),
+            transforms.RandomVerticalFlip(),
+            transforms.RandomAffine(
+                degrees=0,
+                translate=(0.05, 0.05),
+                scale=(0.95, 1.05),
+            ),
+            transforms.ColorJitter(
+                brightness=0.12,
+                contrast=0.12,
+                saturation=0.05,
+                hue=0.02,
+            ),
+        ]
+    )
 
 
 def seed_everything(seed: int) -> None:

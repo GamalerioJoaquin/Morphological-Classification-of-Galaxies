@@ -7,11 +7,18 @@ under the repaired workflow. Historical notebook metrics are not used as
 portfolio evidence because they relied on damaged identity, globally fitted
 preprocessing, or resampling before the holdout split.
 
-No image-classification result is currently reported. The former notebook CNN
-run was an unsuccessful, non-reproducible prototype and its saved output is not
-portfolio evidence. Galaxy10 DECaLS is now the selected replacement dataset,
-but the new PyTorch workflow has not yet been executed and verified; see
-[image-pipeline.md](image-pipeline.md).
+The current Galaxy10 DECaLS baseline is preserved as historical output from
+commit `cb665ab`; it is not mixed with the next augmentation and grid-search
+experiment. See [image-pipeline.md](image-pipeline.md) for the current protocol.
+
+### Historical Galaxy10 baseline (`cb665ab`)
+
+This run used the original `base_channels=32` CNN (`32 -> 64 -> 128 -> 256`),
+learning rate `1e-3`, dropout `0.5`, batch size `64`, weighted cross-entropy,
+and rotation/flip augmentation. The best validation accuracy was `0.7568` at
+epoch 75, with validation macro-F1 `0.7352`. The one-time held-out test result
+was accuracy `0.7136` and macro-F1 `0.6988`. These values are historical
+reference points for the next experiment, not claims about the new protocol.
 
 ## Evaluation design
 
