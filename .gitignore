@@ -5,6 +5,7 @@ images/
 images_test/
 data/images/
 data/image-manifests/local*.csv
+data/image-manifests/galaxy10-decals.csv
 
 # Python-generated files
 __pycache__/

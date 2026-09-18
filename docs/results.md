@@ -9,8 +9,9 @@ preprocessing, or resampling before the holdout split.
 
 No image-classification result is currently reported. The former notebook CNN
 run was an unsuccessful, non-reproducible prototype and its saved output is not
-portfolio evidence. The replacement PyTorch pipeline remains blocked on the
-selection of a traceable image dataset; see [image-pipeline.md](image-pipeline.md).
+portfolio evidence. Galaxy10 DECaLS is now the selected replacement dataset,
+but the new PyTorch workflow has not yet been executed and verified; see
+[image-pipeline.md](image-pipeline.md).
 
 ## Evaluation design
 

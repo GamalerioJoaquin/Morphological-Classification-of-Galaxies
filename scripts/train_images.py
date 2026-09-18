@@ -58,6 +58,7 @@ def main() -> int:
     seed_everything(config.random_state)
     loaders = make_data_loaders(manifest, class_names, config)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"device={device}", flush=True)
     model = SmallGalaxyCNN(len(class_names)).to(device)
     loss_function = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
@@ -71,7 +72,11 @@ def main() -> int:
         )
         print(
             f"epoch={epoch + 1} train_loss={train_metrics['loss']:.4f} "
-            f"validation_loss={validation_metrics['loss']:.4f}"
+            f"train_accuracy={train_metrics['accuracy']:.4f} "
+            f"validation_loss={validation_metrics['loss']:.4f} "
+            f"validation_accuracy={validation_metrics['accuracy']:.4f} "
+            f"validation_macro_f1={validation_metrics['macro_f1']:.4f}",
+            flush=True,
         )
 
     test_metrics = run_epoch(model, loaders["test"], loss_function, device)

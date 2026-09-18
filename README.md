@@ -95,10 +95,21 @@ python scripts/run_unsupervised.py
 
 ## Image-classification prototype
 
-The repository includes a small PyTorch CNN and a strict manifest-based image
-loader. There is currently no approved image dataset, saved image metric, or
-trained model. See the [image-pipeline status and data contract](docs/image-pipeline.md)
-before attempting training.
+The selected image dataset is Galaxy10 DECaLS: 17,736 256×256 three-channel
+galaxy images in ten Galaxy Zoo morphology classes. The repository provides a
+verified direct download step, deterministic stratified train/validation/test
+splits, lazy HDF5 loading, an inspection notebook, and a small PyTorch CNN.
+
+```bash
+python -m pip install --force-reinstall -r requirements-gpu.txt
+python scripts/check_torch_gpu.py
+python scripts/prepare_galaxy10.py
+jupyter lab notebooks/04-galaxy10-inspection.ipynb
+jupyter lab notebooks/05-galaxy10-pytorch-training.ipynb
+```
+
+No image metric or trained model is committed yet. See the full
+[image-pipeline protocol](docs/image-pipeline.md).
 
 ## License
 

@@ -2,10 +2,15 @@
 # Install with: python -m pip install -r requirements.txt
 
 # Notebook runtime
+setuptools==80.9.0
 jupyter==1.0.0
 jupyterlab==3.5.3
 notebook==6.5.2
 ipykernel==6.19.2
+ipython==8.8.0
+jupyter-server==1.24.0
+traitlets==5.8.1
+matplotlib-inline==0.1.6
 
 # Tabular analysis and visualization
 numpy==1.23.5
@@ -23,17 +28,18 @@ joblib==1.1.1
 # Astronomy and image access
 astropy==5.1
 astroquery==0.4.6
+h5py==3.8.0
+tqdm==4.67.1
 Pillow==9.3.0
 opencv-python==4.6.0.66
 
-# Historical CNN notebook compatibility
-tensorflow==2.10.0
-keras==2.10.0
-protobuf==3.19.6
+# Galaxy10 preparation downloads the official astroNN-hosted HDF5 file directly
+# and reads it with h5py, avoiding astroNN's TensorFlow import path.
 
-# PyTorch image-pipeline foundation
-torch==2.0.1
-torchvision==0.15.2
+# PyTorch image-pipeline foundation. Install the CUDA build on NVIDIA systems
+# with requirements-gpu.txt after installing this file.
+torch==2.9.0
+torchvision==0.24.0
 
 # Test tooling
 pytest==7.2.0
