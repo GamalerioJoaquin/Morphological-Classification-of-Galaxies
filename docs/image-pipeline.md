@@ -179,6 +179,10 @@ decay values (`0`, `1e-4`), for 24 candidates. Grid selection uses validation
 macro-F1 with six-epoch early stopping. The selected configuration is then
 retrained for up to 80 epochs, with patience 25 and checkpoint selection by
 validation accuracy. The test split is accessed only after that final training.
+The final-training cell also exposes a manual configuration path, so a
+researcher can override the grid-selected learning rate, width, dropout,
+weight decay, batch size, epochs, and early-stopping patience without changing
+the grid-search protocol.
 
 The selected Galaxy10 experiment is run interactively from the training
 notebook after preparation:
